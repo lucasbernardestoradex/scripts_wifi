@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Verifica se o script está sendo executado como root
+# Check if the script is being run as root
 if [ "$EUID" -ne 0 ]; then
-  echo "Por favor, execute como root."
+  echo "Please run as root."
   exit 1
 fi
 
-# Cria o arquivo de configuração do hostapd
+# Create the hostapd configuration file
 HOSTAPD_CONF="/etc/hostapd.conf"
 cat <<EOF > "$HOSTAPD_CONF"
 interface=uap0
@@ -20,11 +20,11 @@ wpa=2
 wpa_passphrase=12345678
 EOF
 
-echo "Arquivo hostapd.conf criado em $HOSTAPD_CONF"
+echo "hostapd.conf file created at $HOSTAPD_CONF"
 
-# Cria o arquivo de configuração de rede para DHCP via systemd-networkd
+# Create the network configuration file for DHCP via systemd-networkd
 NETWORK_CONF="/etc/systemd/network/80-wifi-ap.network"
-mkdir -p "$(dirname "$NETWORK_CONF")"  # Garante que o diretório exista
+mkdir -p "$(dirname "$NETWORK_CONF")"  # Ensure the directory exists
 
 cat <<EOF > "$NETWORK_CONF"
 [Match]
@@ -41,8 +41,8 @@ PoolOffset=10
 PoolSize=30
 EOF
 
-echo "Arquivo de configuração de rede criado em $NETWORK_CONF"
+echo "Network configuration file created at $NETWORK_CONF"
 
-# Reinicializa a máquina para aplicar as configurações
-echo "Reiniciando o sistema para aplicar as configurações..."
+# Reboot the machine to apply the configurations
+echo "Rebooting the system to apply the configurations..."
 reboot now
