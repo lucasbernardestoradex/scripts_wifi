@@ -17,7 +17,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Wait for the user to press a key before continuing
-read -n 1 -s -r -p "hostapd restarted. Press any key to continue..."
+read -n 1 -s -r -p "On your separate device, try connecting to the created access point (there isn't internet yet). Press any key after testing access point..."
 echo ""
 
 # Create the configuration file to enable packet forwarding
@@ -65,4 +65,4 @@ echo "Reloading systemd services and enabling iptables.service..."
 sudo systemctl --system daemon-reload
 sudo systemctl enable iptables
 
-echo "Configuration completed successfully!"
+echo "Configuration completed! On your separate device, disable all other network interfaces that may provide internet, and try to access any service that requires internet (webpage, app, etc.)"
